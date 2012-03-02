@@ -787,12 +787,52 @@ policies and contribution forms [3].
                 TIMEOUT_ERR: 23,
                 INVALID_NODE_TYPE_ERR: 24,
                 DATA_CLONE_ERR: 25,
+
+                IndexSizeError: 1,
+                HierarchyRequestError: 3,
+                WrongDocumentError: 4,
+                InvalidCharacterError: 5,
+                NoModificationAllowedError: 7,
+                NotFoundError: 8,
+                NotSupportedError: 9,
+                InvalidStateError: 11,
+                SyntaxError: 12,
+                InvalidModificationError: 13,
+                NamespaceError: 14,
+                InvalidAccessError: 15,
+                TypeMismatchError: 17,
+                SecurityError: 18,
+                NetworkError: 19,
+                AbortError: 20,
+                URLMismatchError: 21,
+                QuotaExceededError: 22,
+                TimeoutError: 23,
+                InvalidNodeTypeError: 24,
+                DataCloneError: 25,
+
+                UnknownError: 0,
+                ConstraintError: 0,
+                DataError: 0,
+                TransactionInactiveError: 0,
+                ReadOnlyError: 0,
+                VersionError: 0,
+
             }[code];
             if (required_props.code === undefined)
             {
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
-            required_props[code] = required_props.code;
+
+            // If using newstyle DOM4 error codes, also expect type to be correct
+            if (code.toUpperCase() !== code)
+            {
+                required_props.type = code;
+            }
+            else
+            {
+                required_props[code] = required_props.code;
+            }
+
             //Uncomment this when the latest version of every browser
             //actually implements the spec; otherwise it just creates
             //zillions of failures.  Also do required_props.type.
