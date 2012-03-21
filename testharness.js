@@ -766,7 +766,7 @@ policies and contribution forms [3].
             }
 
             // DOMException
-            code = {
+            var tmp = {
                 INDEX_SIZE_ERR: 'IndexSizeError',
                 HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
                 WRONG_DOCUMENT_ERR: 'WrongDocumentError',
@@ -788,7 +788,8 @@ policies and contribution forms [3].
                 TIMEOUT_ERR: 'TimeoutError',
                 INVALID_NODE_TYPE_ERR: 'InvalidNodeTypeError',
                 DATA_CLONE_ERR: 'DataCloneError',
-            }[code]
+            }[code];
+            code = (tmp === undefined) ? code : tmp;
 
             var required_props = {};
             required_props.code = {
