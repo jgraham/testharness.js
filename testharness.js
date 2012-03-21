@@ -764,30 +764,34 @@ policies and contribution forms [3].
                                      expected_name:code.name});
                 return;
             }
+
+            // DOMException
+            code = {
+                INDEX_SIZE_ERR: 'IndexSizeError',
+                HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
+                WRONG_DOCUMENT_ERR: 'WrongDocumentError',
+                INVALID_CHARACTER_ERR: 'InvalidCharacterError',
+                NO_MODIFICATION_ALLOWED_ERR: 'NoModificationAllowedError',
+                NOT_FOUND_ERR: 'NotFoundError',
+                NOT_SUPPORTED_ERR: 'NotSupportedError',
+                INVALID_STATE_ERR: 'InvalidStateError',
+                SYNTAX_ERR: 'SyntaxError',
+                INVALID_MODIFICATION_ERR: 'InvalidModificationError',
+                NAMESPACE_ERR: 'NamespaceError',
+                INVALID_ACCESS_ERR: 'InvalidAccessError',
+                TYPE_MISMATCH_ERR: 'TypeMismatchError',
+                SECURITY_ERR: 'SecurityError',
+                NETWORK_ERR: 'NetworkError',
+                ABORT_ERR: 'AbortError',
+                URL_MISMATCH_ERR: 'URLMismatchError',
+                QUOTA_EXCEEDED_ERR: 'QuotaExceededError',
+                TIMEOUT_ERR: 'TimeoutError',
+                INVALID_NODE_TYPE_ERR: 'InvalidNodeTypeError',
+                DATA_CLONE_ERR: 'DataCloneError',
+            }[code]
+
             var required_props = {};
             required_props.code = {
-                INDEX_SIZE_ERR: 1,
-                HIERARCHY_REQUEST_ERR: 3,
-                WRONG_DOCUMENT_ERR: 4,
-                INVALID_CHARACTER_ERR: 5,
-                NO_MODIFICATION_ALLOWED_ERR: 7,
-                NOT_FOUND_ERR: 8,
-                NOT_SUPPORTED_ERR: 9,
-                INVALID_STATE_ERR: 11,
-                SYNTAX_ERR: 12,
-                INVALID_MODIFICATION_ERR: 13,
-                NAMESPACE_ERR: 14,
-                INVALID_ACCESS_ERR: 15,
-                TYPE_MISMATCH_ERR: 17,
-                SECURITY_ERR: 18,
-                NETWORK_ERR: 19,
-                ABORT_ERR: 20,
-                URL_MISMATCH_ERR: 21,
-                QUOTA_EXCEEDED_ERR: 22,
-                TIMEOUT_ERR: 23,
-                INVALID_NODE_TYPE_ERR: 24,
-                DATA_CLONE_ERR: 25,
-
                 IndexSizeError: 1,
                 HierarchyRequestError: 3,
                 WrongDocumentError: 4,
@@ -816,28 +820,20 @@ policies and contribution forms [3].
                 TransactionInactiveError: 0,
                 ReadOnlyError: 0,
                 VersionError: 0,
-
             }[code];
+
             if (required_props.code === undefined)
             {
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            // If using newstyle DOM4 error codes, also expect type to be correct
-            if (code.toUpperCase() !== code)
+            // If the browser threw non-allcaps DOMException, it's new and needs type to
+            // be set correctly
+            if (e.type !== e.type.toUpperCase())
             {
                 required_props.type = code;
             }
-            else
-            {
-                required_props[code] = required_props.code;
-            }
 
-            //Uncomment this when the latest version of every browser
-            //actually implements the spec; otherwise it just creates
-            //zillions of failures.  Also do required_props.type.
-            //required_props.name = code;
-            //
             //We'd like to test that e instanceof the appropriate interface,
             //but we can't, because we don't know what window it was created
             //in.  It might be an instanceof the appropriate interface on some
