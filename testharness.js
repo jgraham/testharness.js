@@ -766,7 +766,7 @@ policies and contribution forms [3].
             }
 
             // DOMException
-            var tmp = {
+            var newstyle_code = {
                 INDEX_SIZE_ERR: 'IndexSizeError',
                 HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
                 WRONG_DOCUMENT_ERR: 'WrongDocumentError',
@@ -789,7 +789,8 @@ policies and contribution forms [3].
                 INVALID_NODE_TYPE_ERR: 'InvalidNodeTypeError',
                 DATA_CLONE_ERR: 'DataCloneError',
             }[code];
-            code = (tmp === undefined) ? code : tmp;
+            if (newstyle_code !== undefined)
+                code = newstyle_code;
 
             var required_props = {};
             required_props.code = {
@@ -828,9 +829,7 @@ policies and contribution forms [3].
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            // If the browser threw non-allcaps DOMException, it's new and needs type to
-            // be set correctly
-            if (e.type !== e.type.toUpperCase())
+            if (e.type !== undefined)
             {
                 required_props.type = code;
             }
