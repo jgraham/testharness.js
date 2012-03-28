@@ -766,7 +766,7 @@ policies and contribution forms [3].
             }
 
             // DOMException
-            var newstyle_code = {
+            var code_name_map = {
                 INDEX_SIZE_ERR: 'IndexSizeError',
                 HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
                 WRONG_DOCUMENT_ERR: 'WrongDocumentError',
@@ -788,9 +788,9 @@ policies and contribution forms [3].
                 TIMEOUT_ERR: 'TimeoutError',
                 INVALID_NODE_TYPE_ERR: 'InvalidNodeTypeError',
                 DATA_CLONE_ERR: 'DataCloneError',
-            }[code];
-            if (newstyle_code !== undefined)
-                code = newstyle_code;
+            };
+
+            name = code in code_name_map ? code_name_map[code] : code;
 
             var required_props = {};
             required_props.code = {
@@ -822,16 +822,16 @@ policies and contribution forms [3].
                 TransactionInactiveError: 0,
                 ReadOnlyError: 0,
                 VersionError: 0,
-            }[code];
+            }[name];
 
             if (required_props.code === undefined)
             {
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            if (e.type !== undefined)
+            if (e.name !== undefined)
             {
-                required_props.type = code;
+                required_props.name = name;
             }
 
             //We'd like to test that e instanceof the appropriate interface,
