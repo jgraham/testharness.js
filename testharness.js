@@ -790,7 +790,7 @@ policies and contribution forms [3].
                 DATA_CLONE_ERR: 'DataCloneError',
             };
 
-            name = code in code_name_map ? code_name_map[code] : code;
+            var name = code in code_name_map ? code_name_map[code] : code;
 
             var required_props = {};
             required_props.code = {
@@ -829,7 +829,7 @@ policies and contribution forms [3].
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            if (e.name !== undefined)
+            if (e.name !== e.name.toUpperCase())
             {
                 required_props.name = name;
             }
