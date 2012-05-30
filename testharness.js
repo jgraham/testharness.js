@@ -767,7 +767,6 @@ policies and contribution forms [3].
                 return;
             }
 
-            // DOMException
             var code_name_map = {
                 INDEX_SIZE_ERR: 'IndexSizeError',
                 HIERARCHY_REQUEST_ERR: 'HierarchyRequestError',
@@ -794,8 +793,7 @@ policies and contribution forms [3].
 
             var name = code in code_name_map ? code_name_map[code] : code;
 
-            var required_props = {};
-            required_props.code = {
+            var name_code_map = {
                 IndexSizeError: 1,
                 HierarchyRequestError: 3,
                 WrongDocumentError: 4,
@@ -824,15 +822,18 @@ policies and contribution forms [3].
                 TransactionInactiveError: 0,
                 ReadOnlyError: 0,
                 VersionError: 0,
-            }[name];
+            };
 
-            if (required_props.code === undefined)
+            if (!(name in name_code_map))
             {
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
+            var required_props = {};
+            required_props.code = name_code_map[name];
+
             if (required_props.code === 0
-            || "name" in e && e.name !== e.name.toUpperCase() && e.name !== "DOMException")
+            || ("name" in e && e.name !== e.name.toUpperCase() && e.name !== "DOMException"))
             {
                 // New style exception: also test the name property.
                 required_props.name = name;
