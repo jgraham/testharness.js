@@ -831,7 +831,8 @@ policies and contribution forms [3].
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            if (e.name !== e.name.toUpperCase() || required_props.code === 0)
+            if (required_props.code === 0
+            || "name" in e && e.name !== e.name.toUpperCase() && e.name !== "DOMException")
             {
                 // New style exception: also test the name property.
                 required_props.name = name;
