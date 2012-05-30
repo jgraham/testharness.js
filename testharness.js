@@ -259,9 +259,11 @@ policies and contribution forms [3].
  *   func - a function that should throw
  *
  *   asserts that /func/ throws an exception. If a string is passed for /code/,
- *   it checks that the exception is a fitting DOMException, else if an object is
- *   passed for /code/, it checks that the thrown exception has all the properties
- *   that the object given in /code/ has.
+ *   it checks that the exception is a fitting DOMException. If an object is
+ *   passed for /code/ instead of a string, checks that the thrown exception has
+ *   a property called "name" that matches the property of code called "name".
+ *   Note, this function will probably be rewritten sometime to make more
+ *   sense.
  *
  * assert_unreached(description)
  *   asserts if called. Used to ensure that some codepath is *not* taken e.g.
