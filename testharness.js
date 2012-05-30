@@ -829,8 +829,7 @@ policies and contribution forms [3].
                 throw new AssertionError('Test bug: unrecognized DOMException code "' + code + '" passed to assert_throws()');
             }
 
-            var required_props = {};
-            required_props.code = name_code_map[name];
+            var required_props = { code: name_code_map[name] };
 
             if (required_props.code === 0
             || ("name" in e && e.name !== e.name.toUpperCase() && e.name !== "DOMException"))
