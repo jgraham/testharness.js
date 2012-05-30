@@ -254,14 +254,14 @@ policies and contribution forms [3].
  *   assert that property property_name on object is readonly
  *
  * assert_throws(code, func, description)
- *   code - a DOMException/RangeException code as a string, e.g. "HIERARCHY_REQUEST_ERR"
+ *   code - either a DOMException code as a string, or an object
+ *          e.g. "HierarchyRequestError" or { type: "TypeError" }
  *   func - a function that should throw
  *
- *   assert that func throws a DOMException or RangeException (as appropriate)
- *   with the given code.  If an object is passed for code instead of a string,
- *   checks that the thrown exception has a property called "name" that matches
- *   the property of code called "name".  Note, this function will probably be
- *   rewritten sometime to make more sense.
+ *   asserts that /func/ throws an exception. If a string is passed for /code/,
+ *   it checks that the exception is a fitting DOMException, else if an object is
+ *   passed for /code/, it checks that the thrown exception has all the properties
+ *   that the object given in /code/ has.
  *
  * assert_unreached(description)
  *   asserts if called. Used to ensure that some codepath is *not* taken e.g.
@@ -831,6 +831,7 @@ policies and contribution forms [3].
 
             if (e.name !== e.name.toUpperCase() || required_props.code === 0)
             {
+                // New style exception: also test the name property.
                 required_props.name = name;
             }
 
