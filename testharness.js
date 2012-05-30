@@ -255,7 +255,7 @@ policies and contribution forms [3].
  *
  * assert_throws(code, func, description)
  *   code - either a DOMException code as a string, or an object
- *          e.g. "HierarchyRequestError" or { type: "TypeError" }
+ *          e.g. "HierarchyRequestError" or `new TypeError()`
  *   func - a function that should throw
  *
  *   asserts that /func/ throws an exception. If a string is passed for /code/,
