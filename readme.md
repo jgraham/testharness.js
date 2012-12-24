@@ -17,3 +17,5 @@ To use testharness.js you must include two scripts, in the order given:
 ## Full documentation ##
 
 Full documentation of the API is kept in the source of testharness.js
+
+However, there is also a [nice HTML-based guide](http://darobin.github.com/test-harness-tutorial/docs/using-testharness.html) to using testharness. It also has lots of examples, etc.
